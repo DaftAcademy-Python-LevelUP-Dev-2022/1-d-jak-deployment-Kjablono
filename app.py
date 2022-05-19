@@ -1,6 +1,6 @@
 from typing import Dict
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Response
 
 from pydantic import BaseModel
 
@@ -37,3 +37,22 @@ def method_options():
 @app.post("/method", status_code=201)
 def method_post():
     return {"method": "POST"}
+
+
+# Zadanie 1.3
+@app.get("/day")
+def day_validate(*, name: str, number: int):
+    valid_days = {
+        "monday": 1,
+        "tuesday": 2,
+        "wednesday": 3,
+        "thursday": 4,
+        "friday": 5,
+        "saturday": 6,
+        "sunday": 7
+    }
+
+    if name in valid_days.keys() and valid_days[name] == number:
+        return Response(status_code=200)
+    else:
+        return Response(status_code=400)
