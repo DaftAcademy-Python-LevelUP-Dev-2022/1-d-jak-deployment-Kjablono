@@ -2,6 +2,7 @@ import unittest
 
 import requests
 
+from fastapi import FastAPI
 from main import HerokuApp
 
 
