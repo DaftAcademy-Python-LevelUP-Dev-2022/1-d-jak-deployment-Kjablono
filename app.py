@@ -56,3 +56,5 @@ def day_validate(*, name: str, number: int):
         return Response(status_code=200)
     else:
         return Response(status_code=400)
+
+# Zadanie 1.4
