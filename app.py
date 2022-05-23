@@ -91,7 +91,7 @@ def add_event(event_in: EventIn):
 
 # Zadanie 1.5
 
-@app.get("/event/{date}", response_model=List[EventResp])
+@app.get("/events/{date}", response_model=List[EventResp])
 def get_events_by_date(date: str):
     events_from_date: List[EventResp] = []
 
