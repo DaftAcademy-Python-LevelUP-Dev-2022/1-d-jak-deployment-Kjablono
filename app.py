@@ -72,7 +72,7 @@ class EventResp(BaseModel):
     date_added: str
 
 
-@app.put("/events", response_model=EventResp)
+@app.put("/events", response_model=EventResp, status_code=200)
 def add_event(*, event_in: EventIn):
     new_id = EventResp.id + 1
     today = date.today().strftime('%Y-%m-%d')
