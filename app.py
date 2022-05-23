@@ -1,4 +1,4 @@
-from typing import Dict
+from datetime import date
 
 from fastapi import FastAPI, Response
 
@@ -56,5 +56,26 @@ def day_validate(*, name: str, number: int):
         return Response(status_code=200)
     else:
         return Response(status_code=400)
+
+
+# Zadanie 1.4
+
+class EventIn(BaseModel):
+    date: str
+    event: str
+
+
+class EventResp(BaseModel):
+    id: int = -1
+    event: str
+    date: str
+    date_added: str
+
+
+@app.put("/events", response_model=EventResp)
+def add_event(*, event_in: EventIn):
+    new_id = EventResp.id + 1
+    today = date.today().strftime('%Y-%m-%d')
+    return EventResp(id=new_id, event=event_in.event, date=event_in.date, date_added=today)
 
 # Zadanie 1.4
