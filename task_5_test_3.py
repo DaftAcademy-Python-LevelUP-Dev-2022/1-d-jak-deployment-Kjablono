@@ -25,7 +25,6 @@ class HerokuSetupTest(unittest.TestCase):
             retrieve_response = requests.get(self.app_path + date)
             if retrieve_response.status_code == 404:
                 response_404 = retrieve_response
-
         self.assertEqual(response_404.status_code, 404)
 
 

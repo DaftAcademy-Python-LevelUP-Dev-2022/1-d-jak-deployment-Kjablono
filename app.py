@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, datetime
 from typing import List
 
 from fastapi import FastAPI, Response, status
@@ -93,12 +93,17 @@ def add_event(event_in: EventIn):
 
 @app.get("/events/{date}", response_model=List[EventResp])
 def get_events_by_date(date: str):
+    try:
+        datetime.strptime(date, "%Y-%m-%d")
+    except ValueError:
+        return Response(status_code=status.HTTP_400_BAD_REQUEST)
+
     events_from_date: List[EventResp] = []
 
     for e in events:
         if e.date == date:
             events_from_date.append(e)
-    if len(events_from_date) > 0:
+    if len(events_from_date) != 0:
         return events_from_date
 
     return Response(status_code=status.HTTP_404_NOT_FOUND)
