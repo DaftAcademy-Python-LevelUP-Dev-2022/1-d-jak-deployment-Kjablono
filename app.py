@@ -1,4 +1,5 @@
 from datetime import date
+from typing import List
 
 from fastapi import FastAPI, Response
 
@@ -66,16 +67,25 @@ class EventIn(BaseModel):
 
 
 class EventResp(BaseModel):
-    id: int = -1
+    id: int
     event: str
     date: str
     date_added: str
 
 
-@app.put("/events", response_model=EventResp, status_code=200)
+events: List[EventResp] = []
+
+
+@app.put("/events")
 def add_event(event_in: EventIn):
-    new_id = EventResp.id + 1
+    if len(events) == 0:
+        new_id = 0
+    else:
+        new_id = events[-1].id + 1
+
     today = date.today().strftime('%Y-%m-%d')
-    return EventResp(id=new_id, event=event_in.event, date=event_in.date, date_added=today)
+    response = EventResp(id=new_id, event=event_in.event, date=event_in.date, date_added=today)
+    events.append(response)
+    return response
 
 # Zadanie 1.5
